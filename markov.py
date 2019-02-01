@@ -1,5 +1,5 @@
 """Generate Markov text from text files."""
-
+import sys
 from random import choice
 
 #file_path = "green-egg.txt"
@@ -59,26 +59,17 @@ def make_text(chains):
 
     words = []
     current_key = choice(list(chains.keys()))
-    # print(current_key)
-    # chosen_word = choice(chains[current_key])
-    # current_key = (current_key[1],chosen_word)
-    # print(chosen_word, current_key)
+    
     a, b = current_key
     words.append(a)
     words.append(b)
-    #for current_key, v in chains.items():
-    while True:
-        if current_key in chains and len(chains[current_key]) != 0:
-    # if (current_key in chains) or (len(chains[current_key]) != 0):
-            # a, b = current_key
-            # words.append(a)
-            # words.append(b)
-            # chosen_word = choice(chains[current_key])
-            chosen_word = choice(chains[current_key])
-            words.append(chosen_word)
-            current_key = (current_key[1],chosen_word)
-        else: 
-            break
+
+    while current_key in chains and len(chains[current_key]) != 0:
+        chosen_word = choice(chains[current_key])
+        words.append(chosen_word)
+        current_key = (current_key[1],chosen_word)
+    # else: 
+    #     break
 
 
     #print(words)
@@ -87,7 +78,8 @@ def make_text(chains):
     return " ".join(words)
 
 
-input_path = "green-eggs.txt"
+#input_path = "green-eggs.txt"
+input_path = sys.argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
