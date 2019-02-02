@@ -60,15 +60,23 @@ def make_chains(text_string,n_gram):
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
+    # words = []
+
+
     current_key = choice(list(chains.keys()))
+
+    words = [(word) for word in current_key]
+
+    print("list comp for words list>>> {}".format(words))
         
     # a, b = current_key
     # words.append(a)
     # words.append(b)
 
-    for word in current_key:
-        words.append(word)
+    #words.append(word) for word in current_key
+    # for word in current_key: 
+    #     words.append(word)
+    # words.append(word) for word in current_key
     
     #perform following commands until key not found in dict or 
     #value for the key is an empty list 
