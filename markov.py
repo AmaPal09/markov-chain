@@ -67,8 +67,8 @@ def make_text(chains):
     # words.append(a)
     # words.append(b)
 
-    for key in current_key:
-        words.append(key)
+    for word in current_key:
+        words.append(word)
     
     #perform following commands until key not found in dict or 
     #value for the key is an empty list 
