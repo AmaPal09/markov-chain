@@ -10,9 +10,8 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-
-    # your code goes here
-
+    
+    #open the input file provided and read it into 1 string
     return open(file_path).read()
 
 
@@ -40,18 +39,21 @@ def make_chains(text_string,n_gram):
         >>> chains[('there','juanita')]
         [None]
     """
+
+    #create a list by splint the string on spaces
     text_list = text_string.split()
-    #print(text_list)
+    
+    #add the keys to the dict from the list with each key of length n(input)
     chains = {tuple(text_list[i:i+n_gram]):[] for i in range(len(text_list)-n_gram)}
     
-    #chains = {(text_list[i:n_gram+1]):[] for i in range(0,len(text_list) -n_gram)}
-
+    #loop over the dict for each of its keys
     for k in chains.keys():
-        for i in range(0,len(text_list)-n_gram):
+        #for each n words in the text list and if they match, add the following 
+        #word to the values
+        for i in range(0,len(text_list)-n_gram): 
             if tuple(text_list[i:i+n_gram]) == k:
                 chains[k].append(text_list[i+n_gram])
-
-    print(chains)
+    
     return chains
 
 
@@ -60,22 +62,26 @@ def make_text(chains):
 
     words = []
     current_key = choice(list(chains.keys()))
+        
+    # a, b = current_key
+    # words.append(a)
+    # words.append(b)
+
+    for key in current_key:
+        words.append(key)
     
-    a, b = current_key
-    words.append(a)
-    words.append(b)
-
+    #perform following commands until key not found in dict or 
+    #value for the key is an empty list 
     while current_key in chains and len(chains[current_key]) != 0:
+        #choose a random word from the values
         chosen_word = choice(chains[current_key])
+        #append the chosen word to the output
         words.append(chosen_word)
-        current_key = (current_key[1],chosen_word)
-    # else: 
-    #     break
-
-
-    #print(words)
-
-
+        #create a new key tuple of lenth n using the current key and the chosen 
+        #word
+        current_key = current_key[1:]+(chosen_word,)
+    
+    
     return " ".join(words)
 
 
@@ -90,6 +96,7 @@ input_text = open_and_read_file(input_path)
 chains = make_chains(input_text,input_n)
 
 # Produce random text
-#random_text = make_text(chains)
+random_text = make_text(chains)
 
-#print(random_text)
+print(random_text)
+
