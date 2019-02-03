@@ -1,6 +1,7 @@
 """Generate Markov text from text files."""
 import sys
 from random import choice
+from string import punctuation
 
 #file_path = "green-egg.txt"
 
@@ -60,23 +61,10 @@ def make_chains(text_string,n_gram):
 def make_text(chains):
     """Return text from chains."""
 
-    # words = []
-
-
     current_key = choice(list(chains.keys()))
 
     words = [(word) for word in current_key]
 
-    print("list comp for words list>>> {}".format(words))
-        
-    # a, b = current_key
-    # words.append(a)
-    # words.append(b)
-
-    #words.append(word) for word in current_key
-    # for word in current_key: 
-    #     words.append(word)
-    # words.append(word) for word in current_key
     
     #perform following commands until key not found in dict or 
     #value for the key is an empty list 
@@ -88,8 +76,18 @@ def make_text(chains):
         #create a new key tuple of lenth n using the current key and the chosen 
         #word
         current_key = current_key[1:]+(chosen_word,)
+
     
+    #obtain  the index of words starting with Capital letter
+    first_capital = [i for i,word in enumerate(words) if word == word.title()]
+    #obtain the index of words that have last character as a punctuation
+    last_punctuation = [i for i,word in enumerate(words) if word[-1] in punctuation]
     
+    #slice the list so that it starts  from the 1st occurance of word with capital
+    #letter and ends with last occurance of word with punctuation
+    words = words[min(first_capital):max(last_punctuation)+1]
+
+        
     return " ".join(words)
 
 
